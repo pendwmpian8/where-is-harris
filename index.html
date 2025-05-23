@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Where is Harris?</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Garamond', serif;
+      background-color: #f3f0e6;
+    }
+    #map {
+      height: calc(100vh - 56px);
+    }
+    .leaflet-popup-content-wrapper {
+      background: #fdf6e3;
+      font-family: 'Garamond', serif;
+    }
+    .leaflet-popup-tip {
+      background: #fdf6e3;
+    }
+    .navbar {
+      background-color: #3c2f2f !important;
+    }
+    .navbar-brand {
+      font-family: 'MedievalSharp', cursive;
+      font-size: 3rem;
+      color: #f4e2d8 !important;
+    }
+    .nav-link {
+      font-size: 1.5rem;
+      color: #f4e2d8 !important;
+    }
+    .nav-link:hover {
+      color: #d2b48c !important;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Where is Harris?</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="#gallery">Gallery</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#updates">Updates</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#about">About</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div id="map"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet-ajax"></script>
+
+  <script>
+    // Initialize map
+    var map = L.map('map').setView([20, 0], 2);
+
+    // Fantasy-style tile layer
+    L.tileLayer('https://stamen-tiles.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.jpg', {
+      attribution: 'Map tiles by Stamen Design, CC BY 3.0 — Map data © OpenStreetMap',
+      subdomains: 'abcd',
+      minZoom: 1,
+      maxZoom: 16
+    }).addTo(map);
+
+    // Country Harris is currently in
+    const currentCountry = "FRA";
+
+    // Countries Harris has visited
+    const visitedCountries = ["USA", "JPN"];
+
+    // Function to style countries
+    function style(feature) {
+      let fillColor = 'transparent';
+      if (feature.id === currentCountry) {
+        fillColor = 'green';
+      } else if (visitedCountries.includes(feature.id)) {
+        fillColor = 'orange';
+      }
+      return {
+        fillColor: fillColor,
+        weight: 1,
+        opacity: 1,
+        color: '#5c4d3b',
+        fillOpacity: 0.4
+      };
+    }
+
+    // Load GeoJSON of countries
+    fetch('https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json')
+      .then(res => res.json())
+      .then(data => {
+        L.geoJson(data, {
+          style: style,
+          onEachFeature: function (feature, layer) {
+            layer.bindPopup("<strong>Realm:</strong> " + feature.properties.name);
+          }
+        }).addTo(map);
+      });
+  </script>
+</body>
+</html>
