@@ -1,0 +1,45 @@
+
+    body {
+      margin: 0;
+      font-family: 'Garamond', serif;
+      background-image: url('https://www.transparenttextures.com/patterns/old-moon.png');
+      background-color: #f3f0e6;
+    }
+    #map {
+      height: calc(100vh - 56px);
+    }
+    .leaflet-popup-content-wrapper {
+      background: #fdf6e3;
+      font-family: 'Garamond', serif;
+      border: 2px solid #a67c52;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+    .leaflet-popup-tip {
+      background: #fdf6e3;
+    }
+    .navbar {
+      background-color: #3c2f2f !important;
+    }
+    .navbar-brand {
+      font-family: 'Uncial Antiqua', cursive;
+      font-size: 3rem;
+      color: #f4e2d8 !important;
+    }
+    .nav-link {
+      font-size: 1.5rem;
+      font-family: 'MedievalSharp', cursive;
+      color: #f4e2d8 !important;
+    }
+    .nav-link:hover {
+      color: #d2b48c !important;
+    }
+
+    /* path styling */
+    .animated-dash {
+      animation: dashmove 1s linear infinite;
+    }
+
+    @keyframes dashmove {
+      0% { stroke-dashoffset: 0; }
+      100% { stroke-dashoffset: -20; }
+    }
