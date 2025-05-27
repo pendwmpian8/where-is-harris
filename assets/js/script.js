@@ -61,7 +61,7 @@
             pixelSize: 10,
             pathOptions: {
               color: 'gold',
-              weight: 2,
+              weight: 3,
               opacity: 0.9,
               className: 'animated-dash'
             }
